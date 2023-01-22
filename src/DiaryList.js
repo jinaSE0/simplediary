@@ -1,6 +1,6 @@
 import DiaryItem from "./DiaryItem";
 
-const DiaryList = ({ diaryList }) => {
+const DiaryList = ({ onDelete, diaryList }) => {
   console.log(diaryList);
   return (
     <div className="DiaryList">
@@ -10,7 +10,7 @@ const DiaryList = ({ diaryList }) => {
         {diaryList.map((it) => (
           //map의 두번째 인자로 ,idx를 줘서 keyprop으로 사용해도 되지만
           // 수정과정에서 꼬일 수 있으니 데이터 자체에 고유한 값을 넣어주자!
-          <DiaryItem key={it.id} {...it} />
+          <DiaryItem onDelete={onDelete} key={it.id} {...it} />
         ))}
       </div>
     </div>
