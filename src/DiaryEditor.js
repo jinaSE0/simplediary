@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ onCreate }) => {
   const authorInput = useRef();
   const contentInput = useRef();
   const [state, setState] = useState({
@@ -21,6 +21,7 @@ const DiaryEditor = () => {
   const handleSubmit = (e) => {
     if (state.author.length < 1) {
       authorInput.current.focus();
+      //alert를 띄우는 것보다 ux적으로 더 나음
       return; //리턴을 시켜줘서 더이상의 진행이 되지않도록 써줌
     }
 
@@ -29,7 +30,13 @@ const DiaryEditor = () => {
       return;
     }
 
+    onCreate(state.author, state.content, state.emotion);
     alert("저장성공");
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+    });
   };
   return (
     <div className="DiaryEditor">
