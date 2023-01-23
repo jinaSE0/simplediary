@@ -32,6 +32,7 @@ function App() {
 
   //useMemo를 쓰면 안되는 이유 ; 값을 반환하기 때문,
   //onCreate라는 함수 자체를 보내야하므로 useCallback사용
+  //메모이제이션된 콜백함수를 반환해줌
   const onCreate = useCallback((author, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
@@ -43,21 +44,20 @@ function App() {
     };
     dataId.current += 1;
     setData((data) => [newItem, ...data]);
+    //함수형업데이트
   }, []);
 
-  const onRemove = (targetId) => {
-    const newDiaryList = data.filter((it) => it.id !== targetId);
+  const onRemove = useCallback((targetId) => {
+    setData((data) => data.filter((it) => it.id !== targetId));
+  }, []);
 
-    setData(newDiaryList);
-  };
-
-  const onEdit = (targetId, newContent) => {
-    setData(
+  const onEdit = useCallback((targetId, newContent) => {
+    setData((data) =>
       data.map((it) =>
         it.id === targetId ? { ...it, content: newContent } : it
       )
     );
-  };
+  }, []);
 
   //함수가 어떤 결과값을 리턴하고 그 연산과정을 최적화하고 싶을때 useMemo를 사용함
   //이 경우에는 처음 렌더링 될때와 데이터를 불러올때 연산이 두 번되기때문에 useMemo사용

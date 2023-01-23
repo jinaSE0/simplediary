@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const DiaryEditor = ({ onCreate }) => {
-  useEffect(() => {
-    console.log("다이어리에디터렌더");
-  });
+  //현재 문제점 : 삭제하기를 눌러도 다이어리 에디터가 렌더됨(앱컴포넌트가생성될때 onCreate가 두 번 생성)
+  // 언제 렌더링되는지 파악하기위해 useEffect사용
+  // useEffect(() => {
+  //   console.log("다이어리에디터렌더");
+  // });
   const authorInput = useRef();
   const contentInput = useRef();
   const [state, setState] = useState({
